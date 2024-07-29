@@ -1,37 +1,18 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
+import { Stack } from "expo-router";
 
-import { useColorScheme } from '@/hooks/useColorScheme';
-
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
-
+// Import your global CSS file
+import "../global.css"
+import React, { useEffect, useState } from "react";
+import { ContactList, Context } from "@/custom/context";
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
-
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
-
-  if (!loaded) {
-    return null;
-  }
-
+  const emptyContactList: ContactList = { name: "empty", contacts: [], done: [], lastModified: ""}
+  const [activeContactList, setActiveContactList] = useState<ContactList>(emptyContactList);
+  const [allContactLists, setAllContactLists] = useState<ContactList[]>([]);
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
+    <Context.Provider value={{ activeContactList, setActiveContactList, allContactLists, setAllContactLists }}>
+      <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
       </Stack>
-    </ThemeProvider>
+    </Context.Provider>
   );
 }
