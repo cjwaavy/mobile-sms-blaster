@@ -11,16 +11,16 @@ export default function TabLayout(){
        const syncLocalStorage = async () => {
         try {
             const allContactListsString = await AsyncStorage.getItem('allContactLists');
-            console.log("allContactListsString: ", allContactListsString)
+            // console.log("allContactListsString: ", allContactListsString)
             const activeContactListString = await AsyncStorage.getItem('activeContactList');
-            console.log("activeContactListcString: ", activeContactListString)
+            // console.log("activeContactListcString: ", activeContactListString)
             if(allContactListsString){
                 setAllContactLists(JSON.parse(allContactListsString));
-                console.log("tried to set allContactLists state, here it is: ", allContactLists)
+                // console.log("tried to set allContactLists state, here it is: ", allContactLists)
             }
             if(activeContactListString){
                 setActiveContactList(JSON.parse(activeContactListString));
-                console.log("tried to set activeContactList state, here it is: ", activeContactList)
+                // console.log("tried to set activeContactList state, here it is: ", activeContactList)
             }
         }
         catch (error) {
@@ -33,17 +33,17 @@ export default function TabLayout(){
       const syncLocalStorage = async () => {
         try {
             await AsyncStorage.setItem('allContactLists', JSON.stringify(allContactLists));
-            console.log("All Contact Lists (Local Storage): ", await AsyncStorage.getItem('allContactLists'))
+            // console.log("All Contact Lists (Local Storage): ", await AsyncStorage.getItem('allContactLists'))
             await AsyncStorage.setItem('activeContactList', JSON.stringify(activeContactList));
-            console.log("Active Contact List (Local Storage): ", await AsyncStorage.getItem('activeContactList'))
+            // console.log("Active Contact List (Local Storage): ", await AsyncStorage.getItem('activeContactList'))
         } catch (error) {
           console.error(error);
         }
       };
   
       syncLocalStorage();
-        console.log("Active Contact List: ", activeContactList)
-        console.log("All Contact Lists: ", allContactLists)
+        // console.log("Active Contact List: ", activeContactList)
+        // console.log("All Contact Lists: ", allContactLists)
 
         
     },[activeContactList, allContactLists]);

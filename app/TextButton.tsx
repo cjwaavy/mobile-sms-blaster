@@ -1,6 +1,7 @@
-import { useContextValue } from "@/custom/context"
+import { Property, useContextValue } from "@/custom/context"
 import { getLocalTime } from "@/custom/customFunctions"
 import { AntDesign, Ionicons } from "@expo/vector-icons"
+import React from "react"
 import { useState } from "react"
 import { Linking, TouchableOpacity, View, Text } from "react-native"
 
@@ -12,7 +13,7 @@ interface Props{
     city: string
     state: string
     address: string
-    setClicked: React.Dispatch<React.SetStateAction<number>>
+    setClicked: React.Dispatch<React.SetStateAction<boolean>>
 }
 export default function TextButton({index, firstName, lastName, phone, city, state, address, setClicked}: Props){
     const {activeContactList, setActiveContactList, setAllContactLists, allContactLists} = useContextValue()
@@ -26,7 +27,7 @@ export default function TextButton({index, firstName, lastName, phone, city, sta
                 message = `Hi there, this is Charles. I'm interested in your property at ${address}. Are you open to discussing a potential buy out deal and get you cash in your pockets? No obligation. Thanks!` 
                 break 
             case 2:
-                message = `Hello, hope you're well. I'm Charles, a local buyer in Atlanta. I'm interested in purchasing your property at ${address}. Would you consider selling? Let's chat!` 
+                message = `Hello, hope you're well. I'm Charles, a local buyer in ${city}. I'm interested in purchasing your property at ${address}. Would you consider selling? Let's chat!` 
                 break 
             case 3:
                 message = `Hi, I'm Charles, a specialist in helping homeowners with quick sales. If you're looking to sell your property at ${address} hassle-free, let's talk. No pressure.` 
@@ -56,14 +57,18 @@ export default function TextButton({index, firstName, lastName, phone, city, sta
                 style={{backgroundColor: !alreadyTexted ? 'green' : 'orange', padding: 10, borderRadius: 50, marginTop: 5, justifyContent: 'center', alignItems: 'left'  }}
                 onPress={() => { 
                     Linking.openURL(`sms:${phone}?body=${encodeURIComponent(getRandomMessage())}`)
-                    setClicked(1)
+                    setClicked(true)
                     setAlreadyTexted(true)
+                    // let firstElement = activeContactList.contacts[0]
+                    
+                    // let tempContacts = [activeContactList.contacts[0], ...activeContactList.contacts.slice(1)]
+                    // console.log(tempContacts)
                     const refresh = { name: activeContactList.name,
                         contacts: activeContactList.contacts, 
                         done: [...activeContactList.done, index],
                         lastModified: getLocalTime()}
                     setActiveContactList(refresh)
-                    console.log(activeContactList.done)
+                    // console.log(activeContactList.done)
                 }}
                 >
                     <View className={`flex-row items-center`} >

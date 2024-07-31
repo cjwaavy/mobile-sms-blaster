@@ -1,3 +1,4 @@
+import React from "react";
 import { ContactList, useContextValue } from "@/custom/context";
 import { Link } from "expo-router";
 import { Alert, Button, Text, TouchableOpacity, View } from "react-native";
@@ -10,6 +11,7 @@ import * as FileSystem from 'expo-file-system';
 
 import * as Papa from 'papaparse'
 import { getLocalTime } from "@/custom/customFunctions";
+import { sendSMS } from "@/custom/smsFunctions";
 // import { updateContactListLocalStorage } from "@/custom/customFunctions";
 
 export default function Index() {
@@ -73,6 +75,7 @@ export default function Index() {
           <Text className="absolute text-md text-gray-400 italic">Last Modified: {list.lastModified}</Text>
         </Link>
       ))}
+      <Button title="text test" />
       <View className="absolute shadow-[0_10px_20px_-10px_rgba(109,110,114,0.5)] bottom-10 left-10 p-7 rounded-full  bg-slate-200 shadow-gray-950">
         <TouchableOpacity className="rounded-xl justify-center items-center " onPress={handlePickDocument} >
           <AntDesign name="upload" size={24} color="black" />

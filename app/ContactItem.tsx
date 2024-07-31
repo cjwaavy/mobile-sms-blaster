@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 import { useContextValue } from "@/custom/context" 
 import { getLocalTime, updateContactListLocalStorage } from "@/custom/customFunctions"
 import TextButton from "./TextButton"
+import React from "react"
 
 interface ContactItemProps {
     index: number
@@ -17,7 +18,7 @@ interface ContactItemProps {
 }
 export default function ContactItem( {index, firstName, lastName, phones, city, state, address} : ContactItemProps) {
     const {activeContactList, setActiveContactList, allContactLists, setAllContactLists} = useContextValue() 
-    const [clicked, setClicked] = useState(activeContactList.done.includes(index)? 1 : 0)
+    const [clicked, setClicked] = useState(activeContactList.done.includes(index))
     
     useEffect(() => {
         // updateContactListLocalStorage(useContextValue())
@@ -35,7 +36,6 @@ export default function ContactItem( {index, firstName, lastName, phones, city, 
             <View className="flex flex-row flex-wrap items-center">
                 <Feather name="phone" size={12} color="white"  />
                 <Text className="text-md text-white font-bold">{ ` ${phones.length}`}</Text>
-                
             </View>
             {/* <TouchableOpacity 
                 style={{ position: 'absolute', top: "22%", right: "5%", backgroundColor: 'green', borderRadius: 50, width: 55 , height: 55, justifyContent: 'center', alignItems: 'center'  }}
@@ -43,19 +43,20 @@ export default function ContactItem( {index, firstName, lastName, phones, city, 
                     Linking.openURL(`tel:${phones[0]}`)
                     setClicked(1)
                     const refresh = { name: activeContactList.name,
-                                    contacts: activeContactList.contacts, 
-                                    done: [...activeContactList.done, index],
-                                    lastModified: getLocalTime()}
+                    contacts: activeContactList.contacts, 
+                    done: [...activeContactList.done, index],
+                    lastModified: getLocalTime()}
                     setActiveContactList(refresh)
                     console.log(activeContactList.done)
-                }}
-            >
-                <Feather name="phone" size={30} color="white"  />
-            </TouchableOpacity> */}
+                    }}
+                    >
+                    <Feather name="phone" size={30} color="white"  />
+                    </TouchableOpacity> */}
             {phones.map((phone, index) => (
                 <TextButton key={index} index={index} firstName={firstName} lastName={lastName} phone={phone} city={city} state={state} address={address} setClicked={setClicked} />
             ))}
-            
+            <Text className="text-md text-white font-bold">{ ` ${index}`}</Text>
+
             
 
         </View>

@@ -11,6 +11,7 @@ import { ContactList, Context, Property, useContextValue } from "@/custom/contex
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getLocalTime, updateContactListLocalStorage } from "@/custom/customFunctions";
 import { AntDesign } from "@expo/vector-icons";
+import React from "react";
 
 
 export default function SMS() {
@@ -62,12 +63,12 @@ export default function SMS() {
           <Text className="text-3xl font-bold text-center text-white">{page}/{Math.ceil(activeContactList.contacts.length / itemsPerPage)}</Text>
         </View>
         {loading && <ActivityIndicator/>}
-          <View>
-            <ScrollView>
+          <View className="mb-16">
+            <ScrollView className="pb-44 mb-12">
               {contacts?.map((item : Property, index) => (
                 <ContactItem
-                index={index}
-                key={index}
+                index={(page-1) * itemsPerPage + index}
+                key={(page-1) * itemsPerPage + index}
                 firstName={item["Owner 1 First Name"]} 
                 lastName={item["Owner 1 Last Name"]} 
                 address={item["Address"]} 
